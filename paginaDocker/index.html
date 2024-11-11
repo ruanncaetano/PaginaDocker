@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog sobre Docker</title>
+    <style>
+        /* Reset básico */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Georgia', serif;
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Estilos do Cabeçalho */
+        header {
+            background: #003459;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+        header h1 {
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            font-size: 2.5rem;
+            letter-spacing: 1px;
+        }
+        header nav {
+            margin-top: 10px;
+        }
+        header nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+        header nav a:hover {
+            color: #ffd700;
+        }
+
+        /* Layout Geral */
+        .container {
+            display: flex;
+            max-width: 1200px;
+            margin: 20px auto;
+            gap: 20px;
+        }
+        .content {
+            flex: 3;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .sidebar {
+            flex: 1;
+            padding: 20px;
+            background: #e9e9e9;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Estilos de Seções */
+        h2 {
+            color: #003459;
+            margin-bottom: 10px;
+        }
+        .section {
+            margin-bottom: 20px;
+            padding: 20px;
+            background: #f3f4f6;
+            border-radius: 8px;
+        }
+        .section p {
+            margin-bottom: 10px;
+        }
+
+        /* Estilos da Sidebar */
+        .sidebar h3 {
+            color: #003459;
+            margin-bottom: 15px;
+        }
+        .sidebar ul {
+            list-style: none;
+        }
+        .sidebar ul li {
+            margin-bottom: 10px;
+        }
+        .sidebar ul li a {
+            color: #333;
+            text-decoration: none;
+        }
+        .sidebar ul li a:hover {
+            color: #0077b6;
+        }
+
+        /* Formulário de Contato */
+        .contact-form h3 {
+            margin-bottom: 15px;
+            color: #003459;
+        }
+        .contact-form label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        .contact-form input, .contact-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .contact-form button {
+            margin-top: 10px;
+            background-color: #003459;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .contact-form button:hover {
+            background-color: #005792;
+        }
+        .photo-gallery {
+    margin-top: 20px;
+}
+.photo-gallery .photos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+.photo-gallery img {
+    width: 100px; /* Defina a largura desejada */
+    height: 100px; /* Defina a altura desejada */
+    object-fit: cover; /* Faz com que as imagens mantenham a proporção */
+    border-radius: 8px; /* Bordas arredondadas para um visual mais suave */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s; /* Animação para efeito de zoom */
+}
+.photo-gallery img:hover {
+    transform: scale(1.1); /* Efeito de zoom ao passar o mouse */
+}
+.comment-form {
+    margin-top: 20px;
+}
+.comment-form label {
+    display: block;
+    font-weight: bold;
+    color: #333;
+    margin-top: 10px;
+}
+.comment-form input,
+.comment-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: Arial, sans-serif;
+}
+.comment-form input::placeholder,
+.comment-form textarea::placeholder {
+    color: #aaa;
+    font-style: italic;
+}
+.comment-form button {
+    margin-top: 10px;
+    background-color: #003459;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+.comment-form button:hover {
+    background-color: #005792;
+}
+
+/* Estilos para Exibir Comentários */
+.comments-display {
+    margin-top: 20px;
+    padding-top: 10px;
+    border-top: 1px solid #ddd;
+}
+.comment {
+    padding: 15px;
+    margin-bottom: 15px;
+    background-color: #f3f4f6;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.comment-author {
+    font-weight: bold;
+    color: #003459;
+    margin-bottom: 5px;
+}
+.comment-date {
+    font-size: 0.85rem;
+    color: #888;
+    margin-left: 10px;
+}
+.comment-text {
+    margin-top: 5px;
+    color: #333;
+}
+        /* Rodapé */
+        footer {
+            background: #003459;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 20px;
+        }
+        footer p, footer a {
+            color: #fff;
+            font-size: 0.9rem;
+            text-decoration: none;
+        }
+        footer a:hover {
+            color: #ffd700;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Cabeçalho -->
+    <header>
+        <h1>Docker</h1>
+        <nav>
+            <a href="#sobre">Sobre</a>
+            <a href="#beneficios">Benefícios</a>
+            <a href="#volumes">Volumes</a>
+            <a href="#compose">Docker Compose</a>
+            <a href="#contato">Contato</a>
+        </nav>
+    </header>
+
+    <!-- Layout Principal -->
+    <div class="container">
+
+        <!-- Conteúdo Principal -->
+        <div class="content">
+            <section id="sobre" class="section">
+                <h2>Sobre o Docker</h2>
+            <p>Docker é uma plataforma que utiliza contêineres para criar, implantar e executar aplicações de maneira isolada e portável.</p>
+            <p>Ele permite que desenvolvedores empacotem uma aplicação e todas as suas dependências em contêineres, garantindo que a aplicação funcione de forma consistente em qualquer ambiente, seja no desenvolvimento local, em servidores de teste ou em produção.</p>
+            </section>
+            <section id="beneficios" class="section">
+                <h2>Como Funciona?</h2>
+            <h3>O Conceito de Contêineres</h3>
+            <p>Um contêiner é uma unidade padronizada de software que contém tudo o que a aplicação precisa para rodar, incluindo o código, runtime, bibliotecas e configurações de sistema.</p>
+            <p>Essa padronização permite que as aplicações sejam executadas de forma consistente e previsível, independentemente do ambiente.</p>
+
+            <h3>Leveza e Eficiência</h3>
+            <p>Diferente de uma máquina virtual, que emula todo um sistema operacional, os contêineres compartilham o kernel do sistema operacional host, tornando-os leves e rápidos.</p>
+            <p>Isso permite que múltiplos contêineres rodem em um único servidor, aproveitando melhor os recursos e reduzindo custos.</p>
+
+            </section>
+            <section id="volumes" class="section">
+                <h2>Volumes no Docker</h2>
+            <p>Volumes são uma maneira de armazenar dados de maneira persistente no Docker. Eles permitem que os dados sejam preservados mesmo que o contêiner seja removido ou substituído.</p>
+
+            <h3>Como Volumes Funcionam</h3>
+            <p>Os volumes são criados e gerenciados pelo Docker, e podem ser montados em um contêiner. Isso é particularmente útil para bancos de dados, onde os dados precisam ser mantidos entre as execuções dos contêineres.</p>
+
+            <h3>Benefícios dos Volumes</h3>
+            <p>Volumes facilitam o backup e a recuperação de dados e também permitem o compartilhamento de dados entre vários contêineres.</p>         
+           </section>
+            <section id="compose" class="section">
+                <h2>O que é Docker Compose?</h2>
+            <p>Docker Compose é uma ferramenta que permite definir e gerenciar aplicações multicontêiner de maneira declarativa, usando um arquivo YAML para configurar todos os serviços necessários.</p>
+
+            <h3>Como o Docker Compose Funciona?</h3>
+            <p>No Docker Compose, os serviços, redes e volumes são descritos em um único arquivo (`docker-compose.yml`). Isso facilita a orquestração de aplicações complexas, como ambientes de desenvolvimento com várias dependências.</p>
+
+            <h3>Vantagens do Docker Compose</h3>
+            <p>Docker Compose permite que você inicie todos os serviços de uma vez com um único comando, simplificando o processo de configuração e garantindo que todas as dependências estejam funcionando corretamente.</p>
+       
+            </section>
+        </div>
+
+        <!-- Barra Lateral -->
+        <aside class="sidebar">
+            <!-- Artigos Relacionados -->
+            <section>
+                <h3>Artigos Relacionados</h3>
+                <ul>
+                    <li><a href="#">Introdução ao Docker</a></li>
+                    <li><a href="#">Como criar seu primeiro contêiner</a></li>
+                    <li><a href="#">Diferenças entre VMs e contêineres</a></li>
+                </ul>
+            </section>
+        
+            <!-- Formulário de Contato -->
+            <section class="contact-form">
+                <h3>Contato</h3>
+                <form action="#">
+                    <label for="nome">Nome:</label>
+                    <input type="text" id="nome" name="nome">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email">
+                    <label for="mensagem">Mensagem:</label>
+                    <textarea id="mensagem" name="mensagem" rows="4"></textarea>
+                    <button type="submit">Enviar</button>
+                </form>
+            </section>
+        
+            <!-- Galeria de Fotos -->
+            <section class="photo-gallery">
+                <h3>Galeria de Fotos</h3>
+                <div class="photos">
+                    <img src="img/compose.png" alt="Descrição da imagem 1">
+                    <img src="img/docker.png" alt="Descrição da imagem 2">
+                    <img src="img/maps.png" alt="Descrição da imagem 3">
+                    <!-- Adicione mais imagens conforme necessário -->
+                </div>
+            </section>
+        
+           <!-- Seção de Comentários -->
+<section class="comments-section">
+    <h3>Comentários</h3>
+    <form action="#" class="comment-form">
+        <label for="comentario-nome">Nome:</label>
+        <input type="text" id="comentario-nome" name="comentario-nome" placeholder="Seu nome">
+
+        <label for="comentario-texto">Comentário:</label>
+        <textarea id="comentario-texto" name="comentario-texto" rows="4" placeholder="Escreva seu comentário"></textarea>
+
+        <button type="submit">Enviar Comentário</button>
+    </form>
+
+    <!-- Comentários Falsos -->
+    <div class="comments-display">
+        <div class="comment">
+            <p class="comment-author">Ana Oliveira <span class="comment-date">10/11/2024</span></p>
+            <p class="comment-text">Muito interessante! Docker realmente facilita o processo de desenvolvimento.</p>
+        </div>
+        <div class="comment">
+            <p class="comment-author">Carlos Pereira <span class="comment-date">09/11/2024</span></p>
+            <p class="comment-text">Ótima explicação sobre Docker Compose! Ajudou bastante.</p>
+        </div>
+        <div class="comment">
+            <p class="comment-author">Juliana Souza <span class="comment-date">08/11/2024</span></p>
+            <p class="comment-text">Sempre quis aprender mais sobre Docker. Este artigo é um ótimo começo.</p>
+        </div>
+        <div class="comment">
+            <p class="comment-author">Ricardo Mendes <span class="comment-date">07/11/2024</span></p>
+            <p class="comment-text">Gostei muito da seção sobre volumes. Explicou muito bem!</p>
+        </div>
+        <div class="comment">
+            <p class="comment-author">Mariana Rocha <span class="comment-date">06/11/2024</span></p>
+            <p class="comment-text">Parabéns pelo conteúdo! Muito útil e bem estruturado.</p>
+        </div>
+    </div>
+</section>
+        </aside>
+        
+
+    </div>
+
+    <!-- Rodapé -->
+    <footer>
+        <p>&copy; 2024 - Docker Blog | <a href="#">Política de Privacidade</a> | <a href="#">Termos de Uso</a></p>
+    </footer>
+
+</body>
+</html>
